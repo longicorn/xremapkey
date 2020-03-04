@@ -30,13 +30,11 @@ int handle_key_event(int fd, struct input_event* event)
       send_key_event(fd, BTN_LEFT, event->value);
       break;
     case KEY_J:
-      //send_key_event(fd, KEY_PAGEDOWN, event->value);
       for(int i=0; i<10; i++) {
         send_key_event(fd, KEY_DOWN, event->value);
       }
       break;
     case KEY_K:
-      //send_key_event(fd, KEY_PAGEUP, event->value);
       for(int i=0; i<10; i++) {
         send_key_event(fd, KEY_UP, event->value);
       }

@@ -24,6 +24,7 @@ int main(int argc, char **argv)
     printf("error\n");
     return 1;
   }
+  init_input_device(uinput_fd);
 
   event_loop(kb_fd, uinput_fd);
 
