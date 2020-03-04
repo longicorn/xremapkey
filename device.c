@@ -24,12 +24,12 @@
 int open_keybord_device();
 int open_uinput();
 int test_key_device(char* dev_file);
+void init_input_device(int fd);
 
 int open_keybord_device()
 {
   DIR* input_dir;
-  struct dirent* entry;
-  struct stat st;
+  struct dirent* entry; struct stat st;
   char dev_path[1024];
   int fd;
 
@@ -70,6 +70,20 @@ int open_uinput()
     return open(UINPUT_DEVICE2, O_WRONLY);
   }
   return -1;
+}
+
+void init_input_device(int fd)
+{
+  struct uinput_user_dev dev;
+  memset(&dev, 0, sizeof(dev));
+  strcpy(dev.name, "mouse_mode_input");
+  write(fd, &dev, sizeof(dev));
+
+  ioctl(fd, UI_SET_EVBIT, EV_KEY);
+  ioctl(fd, UI_SET_KEYBIT, KEY_UP);
+  ioctl(fd, UI_SET_KEYBIT, KEY_DOWN);
+
+  ioctl(fd, UI_DEV_CREATE, 0);
 }
 
 int test_key_device(char* dev_file)
